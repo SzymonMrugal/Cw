@@ -4,71 +4,40 @@ package cwiczenie1;
 public class Test {
 
     public static void main(String[] args) {
-        Punkt point1 = new Punkt();         //Tworzenie Nowych punktow
-        Punkt point2 = new Punkt(7);        //za pomoca konstruktora z parametrami i bez
         
-        System.out.println("Opis pierwszego punktu: ");        //Wyswietlanie pelnego opisu pierwszego punkttu
-        System.out.println("  " + point1.Descriptor());
-        System.out.println("  Masa: \t\t\t\t" + point1.getMass());
-        System.out.println("  Glowny moment bezwladnosci: \t\t" + point1.MainMomOfIner());
-        System.out.println("  Moment bezwladnosci wzgledem osi: \t" + point1.MomOfIner(2));
-        System.out.println();
+        Walec cylinder = new Walec(50,5,10);    //Tworzenie trzech obiektow
+        Kula ball = new Kula(50,5);
+        Pret wand = new Pret(50,5,20);
         
-        System.out.println("Opis drugiego punktu: ");           //Wyswietlanie pelnego opisu drugiego punkttu
-        System.out.println("  " + point2.Descriptor());
-        System.out.println("  Masa: \t\t\t\t" + point2.getMass());
-        System.out.println("  Glowny moment bezwladnosci: \t\t" + point2.MainMomOfIner());
-        System.out.println("  Moment bezwladnosci wzgledem osi: \t" + point2.MomOfIner(2));
-        System.out.println();
+        System.out.println(cylinder.DescriptAll());  //Wyswietlanie opisu walca
         
-        point1.setMass(4);              //Zmiana masy pierwszego punktu
+        System.out.println(ball.DescriptAll());  //Wyswietlanie opisu kuli
+
+        System.out.println(wand.DescriptAll());    //Wyswietlanie opisu pretu
         
-        System.out.println("Opis pierwszego punktu po zmianie masy: ");   //Wyswietlanie pelnego opisu pierwszego punktu po zmianie masy
-        System.out.println("  " + point1.Descriptor());
-        System.out.println("  Masa: \t\t\t\t" + point1.getMass());
-        System.out.println("  Glowny moment bezwladnosci: \t\t" + point1.MainMomOfIner());
-        System.out.println("  Moment bezwladnosci wzgledem osi: \t" + point1.MomOfIner(2));       
-        System.out.println();
-        System.out.println();
+                                //Tworzenie tablicy obiektow
+        Punkt[] solids = {new Kula(),new Walec(),new Pret()};
         
-        Punkt[] points = new Punkt[5];          //Tworzenie tablicy punktow
-        for (int i=0; i<points.length; i++){    //Zainicjowanie tablicy punktowza pomoca petli
-            points[i]= new Punkt(i+7);
+                                //Wyswietlanie opisu obiektow
+        System.out.println("-Obiekty w tablicy:-");
+        for(int i=0;i<3;i++){
+            System.out.print(solids[i].DescriptAll());
         }
-        
-        System.out.println("--Opis punktow w tablicy: --");     //Wyswietlenie pelnego opisu kazdego punktu z tablicy
-        for(int i=0; i<points.length; i++){
-            System.out.println("| " + points[i].Descriptor());
-            System.out.println("| Masa: \t\t\t\t" + points[i].getMass());
-            System.out.println("| Glowny moment bezwladnosci: \t\t" + points[i].MainMomOfIner());
-            System.out.println("| Moment bezwladnosci wzgledem osi: \t" + points[i].MomOfIner(2));
-        
-            System.out.println("|------------------------");
-        }       
         System.out.println();
+        
+        System.out.println("Momenty bezwladnosci wzgledem osi oddalonej o 5 :");
+        for(int i=0;i<3;i++){
+            System.out.println(solids[i].MomOfIner(5)+",");
+        }
         System.out.println();
+        
+        /*BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("\nAbyprzejsc do menu wcisnij dowolny przycisk");
+        in.readLine();
+        while(true){
+            int temp = Integer.parseInt(in.readLine());
             
-        //Zadanie na piatke 
-        Bryla solid= new Bryla(4);        
-        
-        System.out.println("----Bryła----");
-        System.out.println("Wspolrzedne i masa punktow:");      //Wysietlanie wszpolrzednych punktow
-        for(int i=0; i<solid.punkty.length; i++){      
-            System.out.print(solid.punkty[i][0] + ",");
-            System.out.print(solid.punkty[i][1] + ",");
-            System.out.print(solid.punkty[i][2] + ",");
-            System.out.println(solid.punkty[i][3]);
-        }
-        System.out.println("Wspolrzedne srodka ciezkosci:");    //Wysietlanie wspolrzednych srodka ciezkoscci
-        for(int i=0; i<3; i++)
-             System.out.print(solid.getCenMassPoint()[i] + ",");
-        System.out.println();
-        
-        System.out.println("Moment bezwladnosci wzgledem osi:");    //Wysietlanie momentu bezwladnosci dla osi OX,OY,OZ
-        for(int i=0;i<3;i++)
-            System.out.print(solid.getMomOfIner()[i] + ",");
-         System.out.println();
-         System.out.println();        
+
+        }*/
     }
-    
 }

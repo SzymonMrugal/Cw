@@ -3,7 +3,7 @@ package cwiczenie1;
 
 public class Punkt {
     
-    private int Mass;   //Prywatna zmienna
+    protected int Mass;   //Prywatna zmienna
     
     int getMass(){      //Zwracanie wartosci prywatnej zmiennej
         return this.Mass;
@@ -14,14 +14,14 @@ public class Punkt {
     }
     
     Punkt(){    //Konstruktor domyślny
-        this.Mass=5;
+        this.Mass=50;
     }   
     
     Punkt(int newMass){ //Konstruktor z parametrem
         if (newMass>0)
             this.Mass=newMass;
         else
-            this.Mass=5;
+            this.Mass=50;
     }
     
     int MainMomOfIner(){    //Glowny moment bezwladnsci = 0 
@@ -35,4 +35,9 @@ public class Punkt {
     String Descriptor(){    
      return "Punkt materialny";   
     }
+    
+    String DescriptAll(){   //Metoda dziedziczona
+        return "";
+    }
+    
 }
