@@ -1,31 +1,31 @@
 public class SimEngine {
     
-    private float m,k,c,l0,mx,my,sx,sy,gw;
+    private double m,k,c,l0;
     private Vector2D ml,sl,mv,g;
                                         //Konstruktor z parametrami
-    public SimEngine(float m,float k,float c,float l0,float mx,float my,float sx,float sy,float mvx,float mvy,float gw){
+    public SimEngine(double m,double k,double c,double l0,double mx,double my,double sx,double sy,double mvx,double mvy,double gw){
         this.m=m;this.k=k;this.c=c;this.l0=l0;
         this.ml = new Vector2D (mx,my);
         this.sl = new Vector2D (sx,sy);
         this.mv = new Vector2D (mvx,mvy);
-        this.g = new Vector2D (0,-gw);
+        this.g = new Vector2D (0,gw);
     }
                                 //Akcesory
-    float getMass(){return m;}
+    double getMass(){return m;}
     
-    void setMass(float m){if(m>0) this.m=m; else this.m=0;}
+    void setMass(double m){if(m>0) this.m=m; else this.m=0;}
     
-    float getSpringiness(){return k;}
+    double getSpringiness(){return k;}
     
-    void setSpringiness(float k){this.k=k;}
+    void setSpringiness(double k){this.k=k;}
      
-    float getDamping(){return c; }
+    double getDamping(){return c; }
     
-    void setDamping(float c){this.c=c;}
+    void setDamping(double c){this.c=c;}
       
-    float getSpringStartLength(){return l0;}
+    double getSpringStartLength(){return l0;}
     
-    void setSpringStartLength(float l0){this.l0=l0;}
+    void setSpringStartLength(double l0){this.l0=l0;}
        
     Vector2D getMassLocation(){return ml;}
     
@@ -43,18 +43,20 @@ public class SimEngine {
     
     void setEarthAcc(Vector2D g){this.g=g;}
                             //Metoda obliczajaca przebieg symulacji
-    void sym(float time){   
-        float newvx,newvy;
-        float len=ml.length();
+    void sym(double time){   
                 
-        newvx = time * ( (-k*(len-l0)* (ml.x/ml.y) - c*mv.x*(ml.x/ml.y))/m ) + mv.x ;
-        newvy = time * ( g.y + (-k*(len-l0)* (ml.y/ml.x) - c*mv.y*(ml.y/ml.x))/m ) + mv.y ;
-        
-        mv.x=newvx;
-        mv.y=newvy;
-        
-        ml.x=mv.x*time + ml.x;
-        ml.y=mv.y*time + ml.y;
+        time= time/1000;  //czas jest podawany w ms
+       
+       Vector2D Fg = g.multiples(m); //sila ciezkosci
+       Vector2D temp = ml.normalize().multiples(l0);
+       Vector2D Fk = ml.substract(temp).multiples(k);   //sila sprezystosci
+       Vector2D Fc = mv.multiples(c);   //sila tlumienia
+       
+       Vector2D Fw = Fg.sum(Fk).sum(Fc); //sila wypadkowa
+       Vector2D a = Fw.multiples(-1/m); //przyspieszenie
+       
+       mv = a.multiples(time).sum(mv);
+       ml = mv.multiples(time).sum(ml);
 
     }
                     //Metoda resetujaca predkosc masy
